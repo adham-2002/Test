@@ -1,29 +1,31 @@
-name: Deploy Static Site to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
-permissions:
-  id-token: write
-  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pages: write
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+      - name: Build site
+        run: |
+          # Your build commands here
+          echo "Site built successfully"
 
-      - name: Upload Static Site
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./
+          path: ./public # Adjust this to your build output directory
 
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v2
